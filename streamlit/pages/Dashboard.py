@@ -1589,6 +1589,7 @@ def render_sidebar():
         )
 
         nav_items = [
+            ("🏠","Home"),
             ("📊", "Dashboard"),
             ("📈", "Analytics"),
             ("🔍", "Explorer"),
