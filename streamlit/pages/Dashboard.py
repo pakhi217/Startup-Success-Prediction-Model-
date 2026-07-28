@@ -1362,10 +1362,15 @@ def create_kpi_cards(kpis: dict, df: pd.DataFrame):
 
 
 def render_filter_bar(df: pd.DataFrame) -> pd.DataFrame:
-    
+    """Dashboard-level filters. Kept intentionally minimal (Country + Industry
+    only) since this is the executive-summary page. The full filter set that
+    used to live here (Funding Range, Status, Search) should move to the
+    Explorer page's render_filter_bar / filtering logic — it's REMOVED from
+    this file, so port it over there manually if you haven't already."""
+
     #st.markdown('<div class="filter-bar-wrap"><div class="filter-bar">', unsafe_allow_html=True)
 
-    c1, c2, c3, c4, c5 = st.columns([1.1, 1.1, 1.3, 1.1, 1.3])
+    c1, c2 = st.columns(2)
 
     with c1:
         st.markdown('<div class="filter-label">Industry</div>', unsafe_allow_html=True)
@@ -1379,27 +1384,6 @@ def render_filter_bar(df: pd.DataFrame) -> pd.DataFrame:
         country_options = ["All Countries"] + sorted(top_countries)
         country_filter = st.selectbox("Country", country_options, label_visibility="collapsed", key="filter_country")
 
-    with c3:
-        st.markdown('<div class="filter-label">Funding Range ($M)</div>', unsafe_allow_html=True)
-        funding_series = df["Funding"].dropna()
-        if not funding_series.empty:
-            min_funding, max_funding = float(funding_series.min()), float(funding_series.max())
-        else:
-            min_funding, max_funding = 0.0, 1.0
-        funding_range = st.slider(
-            "Funding Range", min_value=float(np.floor(min_funding)), max_value=float(np.ceil(max_funding)),
-            value=(float(np.floor(min_funding)), float(np.ceil(max_funding))),
-            label_visibility="collapsed", key="filter_funding",
-        )
-
-    with c4:
-        st.markdown('<div class="filter-label">Status</div>', unsafe_allow_html=True)
-        status_filter = st.selectbox("Status", ["All", "Success", "Failed"], label_visibility="collapsed", key="filter_status")
-
-    with c5:
-        st.markdown('<div class="filter-label">Search</div>', unsafe_allow_html=True)
-        search_term = st.text_input("Search", placeholder="🔍 Search startup ID, industry, or city...", label_visibility="collapsed", key="filter_search")
-
     #st.markdown('</div></div>', unsafe_allow_html=True)
 
     filtered = df.copy()
@@ -1407,16 +1391,6 @@ def render_filter_bar(df: pd.DataFrame) -> pd.DataFrame:
         filtered = filtered[filtered["Industry"] == industry_filter]
     if country_filter != "All Countries":
         filtered = filtered[filtered["Country"] == country_filter]
-    if status_filter != "All":
-        filtered = filtered[filtered["Status"] == status_filter]
-    filtered = filtered[filtered["Funding"].between(funding_range[0], funding_range[1]) | filtered["Funding"].isna()]
-    if search_term:
-        haystack = (
-            filtered["Company"].astype(str) + " " +
-            filtered["Industry"].astype(str) + " " +
-            filtered["City"].astype(str)
-        )
-        filtered = filtered[haystack.str.contains(search_term, case=False, na=False)]
 
     return filtered
 
@@ -1437,29 +1411,26 @@ def render_chart_card(title: str, subtitle: str, fig):
 
 
 def render_charts_section(df: pd.DataFrame):
-    
+    """Executive-summary visuals only: ecosystem status, industry leader,
+    and country leader. Detailed distribution charts (funding histogram,
+    correlation heatmap) are intentionally NOT rendered here anymore — their
+    functions (create_funding_histogram, create_heatmap) are still defined
+    below untouched, so port the calls over to the Analytics page's
+    "Dataset Overview" / "Relationship Analysis" sections."""
+
     st.markdown(
-        '<div class="section-header">Performance Overview'
-        '<span class="section-sub">Visual breakdown of the current dataset</span></div>',
+        '<div class="section-header">Ecosystem Snapshot'
+        '<span class="section-sub">High-level overview of the current dataset</span></div>',
         unsafe_allow_html=True,
     )
 
-    
     row1_col1, row1_col2 = st.columns(2)
     with row1_col1:
         render_chart_card("Startup Status", "Operating / acquired / IPO / closed breakdown", create_pie_chart(df))
     with row1_col2:
-        render_chart_card("Funding Distribution", "Spread of total funding raised across startups", create_funding_histogram(df))
+        render_chart_card("Top Industries", "Which sector dominates by startup count", create_industry_bar_chart(df))
 
-    
-    row2_col1, row2_col2 = st.columns(2)
-    with row2_col1:
-        render_chart_card("Top Industries", "Most represented sectors by startup count", create_industry_bar_chart(df))
-    with row2_col2:
-        render_chart_card("Global Startup Distribution", "Interactive map of startup density by country", create_world_map(df))
-
-    
-    render_chart_card("Correlation Heatmap", "Relationship between funding, funding rounds, company age, and success", create_heatmap(df))
+    render_chart_card("Global Startup Distribution", "Which country leads — startup density by country", create_world_map(df))
 
 
 def render_ai_insights_panel(df: pd.DataFrame):
@@ -1652,17 +1623,13 @@ def main():
 
     render_charts_section(filtered_df)
 
-    
-    insights_col, leaderboard_col = st.columns([1.15, 1])
-    with insights_col:
-        render_ai_insights_panel(filtered_df)
-    with leaderboard_col:
-        render_leaderboard(filtered_df)
+    # AI Insights panel and the Recent Startups table used to render here.
+    # Per the new architecture they belong on Analytics (AI Insights) and
+    # Explorer (startup table) respectively — their functions
+    # (render_ai_insights_panel, render_recent_startups_table) are still
+    # defined below untouched; wire them up on those pages.
+    render_leaderboard(filtered_df)
 
-    
-    render_recent_startups_table(filtered_df)
-
-  
     st.markdown("<div style='height: 3rem;'></div>", unsafe_allow_html=True)
 
 
