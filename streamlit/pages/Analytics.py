@@ -12,6 +12,80 @@ def render_html(html: str) -> None:
     cleaned = "\n".join(line.lstrip() for line in html.strip("\n").splitlines())
     st.markdown(cleaned, unsafe_allow_html=True)
 
+def render_sidebar():
+    with st.sidebar:
+
+        render_html(f"""
+        <div style="padding:0.6rem 0 1rem 0;">
+            <div style="
+                font-family:'Inter', sans-serif;
+                font-weight:700;
+                font-size:1.5rem;
+                color:{COLOR_TEXT};
+                letter-spacing:-0.01em;
+            ">
+                🚀 Startup Analytics
+            </div>
+
+            <div style="
+                font-size:0.72rem;
+                color:{COLOR_MUTED};
+                letter-spacing:0.02em;
+            ">
+                Startup Analytics Platform
+            </div>
+        </div>
+
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin-bottom:1.4rem;
+        ">
+            <span class="version-badge">
+                ✓ Machine Learning Model
+            </span>
+        </div>
+
+        <div style="
+            font-size:0.72rem;
+            font-weight:700;
+            letter-spacing:0.1em;
+            text-transform:uppercase;
+            color:{COLOR_MUTED};
+            margin-bottom:0.6rem;
+        ">
+            Navigation
+        </div>
+        """)
+
+        nav_items = [
+            ("🏠", "Home", "pages/Home.py"),
+            ("📊", "Dashboard", "pages/Dashboard.py"),
+            ("📈", "Analytics", "pages/Analytics.py"),
+            ("🔍", "Explorer", "pages/Explorer.py"),
+            ("🤖", "Prediction", "pages/Prediction.py"),
+            ("ℹ️", "About", "pages/About.py"),
+        ]
+
+        for icon, label, page in nav_items:
+
+            if label == "Analytics":
+
+                render_html(
+                    f'<div class="nav-active">{icon}&nbsp;&nbsp;{label}</div>'
+                )
+
+            else:
+
+                if st.button(
+                    f"{icon}   {label}",
+                    key=f"nav_{label}",
+                    use_container_width=True
+                ):
+                    st.switch_page(page)
+
+
 st.set_page_config(
     page_title="Analytics",
     page_icon="🚀",
@@ -439,168 +513,59 @@ font-size:13px;
     line-height:1.8;
     font-size:15px;
 }}
-.sidebar{{
-    position:fixed;
-    left:0;
-    top:0;
-    width:250px;
-    height:100vh;
-    background:#0F172A;
-    padding:30px 22px;
-    border-right:1px solid rgba(255,255,255,.08);
-    z-index:9999;
-    overflow-y:auto;
+section[data-testid="stSidebar"] {{
+    background:linear-gradient(180deg,rgba(15,23,42,.98) 0%,rgba(11,17,32,.99) 100%);
+    backdrop-filter:blur(18px);
+    border-right:1px solid rgba(148,163,184,.10);
 }}
-.sidebar-title{{
-    font-size:30px;
-    font-weight:700;
-    color:white;
-    margin-bottom:10px;
-}}
-.sidebar-subtitle{{
-    color:#8B93A7;
-    font-size:13px;
-    margin-bottom:35px;
-    letter-spacing:1px;
-}}
-.sidebar-button{{
-    display:block;
+
+section[data-testid="stSidebar"] .stButton button {{
     width:100%;
-    padding:16px 20px;
-    margin-bottom:18px;
-    background:#1B2438;
-    border-radius:18px;
-    color:white;
-    text-decoration:none;
-    font-size:19px;
-    transition:.25s;
-    box-sizing:border-box;
+    text-align:left;
+    background:rgba(255,255,255,.02);
+    color:#F8FAFC;
+    border:1px solid rgba(148,163,184,.08);
+    border-radius:12px;
+    padding:.6rem 1rem;
+    margin-bottom:6px;
+    font-weight:500;
+    letter-spacing:.01em;
+    transition:all .28s cubic-bezier(.4,0,.2,1);
+    position:relative;
+    overflow:hidden;
 }}
-.sidebar-button:hover{{
-    background:#6D4AFF;
-    transform:translateX(6px);
+
+section[data-testid="stSidebar"] .stButton button:hover {{
+    border:1px solid rgba(56,189,248,.45);
+    color:#38BDF8;
+    transform:translateX(5px);
+    box-shadow:0 4px 18px rgba(56,189,248,.18);
 }}
-.main .block-container{{
-    margin-left:250px;
-    max-width:calc(100% - 270px);
-    padding-left:3rem;
-    padding-right:3rem;
-}}
-.page-wrapper{{
-    margin-left:280px;
-    padding-right:30px;
-}}
-.menu-button{{
-    position:fixed;
-    top:25px;
-    left:25px;
-    width:58px;
-    height:58px;
-    border-radius:18px;
-    background:linear-gradient(135deg,#6D4AFF,#8B5CF6);
+
+.nav-active {{
+    background:linear-gradient(90deg,rgba(56,189,248,.16),rgba(168,85,247,.10)) !important;
+    border:1px solid rgba(56,189,248,.4) !important;
+    border-left:3px solid #38BDF8 !important;
+    border-radius:10px;
+    padding:.6rem 1rem .6rem .85rem;
+    margin-bottom:6px;
+    font-weight:700;
+    color:#38BDF8 !important;
+    font-size:.92rem;
     display:flex;
     align-items:center;
-    justify-content:center;
-    font-size:28px;
-    color:white;
-    cursor:pointer;
-    box-shadow:0 8px 25px rgba(109,74,255,.45);
-    z-index:99999;
-    transition:.3s;
-}}
-.menu-button:hover{{
-    transform:scale(1.08);
-    box-shadow:0 12px 35px rgba(109,74,255,.7);
-}}
-.sidebar{{
-    position:fixed;
-    top:0;
-    left:-300px;
-    width:280px;
-    height:100vh;
-    background:#0F172A;
-    border-right:1px solid rgba(255,255,255,.08);
-    padding:90px 25px 30px;
-    box-shadow:10px 0 30px rgba(0,0,0,.4);
-    transition:.35s ease;
-    z-index:99998;
-}}
-.sidebar.show{{
-    left:0;
-}}
-.sidebar-title{{
-    font-size:30px;
-    font-weight:700;
-    color:white;
-    margin-bottom:12px;
-}}
-.sidebar-subtitle{{
-    color:#8B93A7;
-    font-size:13px;
-    letter-spacing:1px;
-    margin-bottom:35px;
-}}
-.sidebar-button{{
-    display:block;
-    padding:16px 20px;
-    margin-bottom:16px;
-    border-radius:16px;
-    background:#182235;
-    color:white;
-    text-decoration:none;
-    font-size:18px;
-    transition:.25s;
-}}
-.sidebar-button:hover{{
-    background:#6D4AFF;
-    transform:translateX(6px);
+    gap:10px;
 }}
 
-section[data-testid="stSidebar"] {{
-    background-color: #0d1220;
-    border-right: 1px solid rgba(255,255,255,0.06);
-}}
-
-section[data-testid="stSidebar"] div.stButton > button {{
-    background: #10192b !important;
-    color: #cbd5e1 !important;
-    border: 1px solid rgba(255,255,255,0.06) !important;
-    border-radius: 10px !important;
-    font-weight: 500 !important;
-    padding: 0.6em 1em !important;
-    justify-content: flex-start !important;
-    text-align: left !important;
-    box-shadow: none !important;
-}}
-
-section[data-testid="stSidebar"] div.stButton > button:hover {{
-    background: #16213a !important;
-    border-color: rgba(255,255,255,0.12) !important;
-    color: #f8fafc !important;
+.sidebar-footer {{
+    font-size:.75rem;
+    color:#94A3B8;
+    margin-top:2rem;
 }}
         </style>
         """,
         unsafe_allow_html=True,
     )
-
-with st.sidebar:
-    st.markdown("### 🚀 Startup Analytics")
-    st.caption("NAVIGATION")
-    if st.button("🏠  Home", use_container_width=True):
-        st.switch_page("pages/Home.py")
-    if st.button("📊  Dashboard", use_container_width=True):
-        st.switch_page("pages/Dashboard.py")
-    if st.button("📈  Analytics", use_container_width=True):
-        st.switch_page("pages/Analytics.py")
-    if st.button("🌍  Explorer", use_container_width=True):
-        st.switch_page("pages/Explorer.py")
-    if st.button("🎯  Prediction", use_container_width=True):
-        st.switch_page("pages/Prediction.py")
-    if st.button("ℹ️  About", use_container_width=True):
-        st.switch_page("pages/About.py")
-
-    st.markdown("---")
-    st.caption("Version 1.0")
 
 st.markdown("""
 <style>
@@ -638,6 +603,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 inject_custom_css()
+render_sidebar()
 
 DATA_PATH = (
     Path(__file__).resolve().parents[2]
@@ -1196,75 +1162,48 @@ country_funding = (
 )
 
 with col7:
+    render_html(chart_header(
+        "🌍 Funding by Country",
+        "Countries with the highest average startup funding."
+    ))
 
-    render_html(
-        chart_header(
-            "🌍 Funding by Country",
-            "Countries with the highest average startup funding."
-        )
-    )
-    country_fig = px.bar(
+    country_fig=px.bar(
         x=country_funding.values,
         y=country_funding.index,
         orientation="h",
         template="plotly_dark"
     )
+
     country_fig.update_traces(
-
         marker=dict(
-
             color=country_funding.values,
-
-            colorscale=[
-                "#85B1B6",
-                "#59889E",
-                "#786F9D"
-            ],
-
+            colorscale=["#85B1B6","#59889E","#786F9D"],
             line=dict(width=0)
-
         ),
-
-        hovertemplate=
-        "<b>%{y}</b><br>"
-        "Average Funding: $%{x:,.0f}"
-        "<extra></extra>"
+        hovertemplate="<b>%{y}</b><br>Average Funding: $%{x:,.0f}<extra></extra>"
     )
+
     country_fig.update_layout(
-
-        height=420,
-
-        paper_bgcolor="rgba(0,0,0,0)",
-
-        plot_bgcolor="rgba(0,0,0,0)",
-
-        margin=dict(
-            l=20,
-            r=20,
-            t=20,
-            b=20
-        ),
-
-        showlegend=False,
-
-        xaxis=dict(
-
-            title="Average Funding",
-
-            showgrid=False,
-
-            zeroline=False,
-
-            tickprefix="$",
-
-            tickformat=".2s"
-        ),
-
-        yaxis=dict(
-
-            title="",
-
-            gridcolor="rgba(255,255,255,.08)"
+    height=420,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    margin=dict(
+        l=20,
+        r=20,
+        t=20,
+        b=20
+    ),
+    showlegend=False,
+    xaxis=dict(
+        title="Average Funding",
+        showgrid=False,
+        zeroline=False,
+        tickprefix="$",
+        tickformat=".2s"
+    ),
+    yaxis=dict(
+        title="",
+        gridcolor="rgba(255,255,255,.08)"
         )
     )
     st.plotly_chart(
@@ -1273,39 +1212,35 @@ with col7:
         config={"displayModeBar": False}
     )
     country_stats = (
-    df.groupby("country")
-      .agg(
-          avg_funding=("total_funding", "mean"),
-          startups=("country", "count")
-      )
+        df.groupby("country")
+        .agg(
+            avg_funding=("total_funding", "mean"),
+            startups=("country", "count")
+        )
     )
-
     country_stats = country_stats[
         country_stats["startups"] >= 20
     ]
-
     country_stats = country_stats.sort_values(
         "avg_funding",
         ascending=False
     ).head(10)
     x = country_stats["avg_funding"]
     y = country_stats.index
+    industry_stats = (
+        df.groupby("industry")
+        .agg(
+            avg_funding=("total_funding", "mean"),
+            startups=("industry", "count")
+        )
+    )
+    industry_stats = (
+        industry_stats[industry_stats["startups"] >= 20]
+        .sort_values("avg_funding", ascending=False)
+        .head(10)
+    )
 
-industry_stats = (
-    df.groupby("industry")
-      .agg(
-          avg_funding=("total_funding", "mean"),
-          startups=("industry", "count")
-      )
-)
-
-industry_stats = (
-    industry_stats[industry_stats["startups"] >= 20]
-    .sort_values("avg_funding", ascending=False)
-    .head(10)
-)
 with col8:
-
     render_html(
         chart_header(
             "🏭 Funding by Industry",
@@ -1319,43 +1254,32 @@ with col8:
         template="plotly_dark"
     )
     industry_fig.update_traces(
-
         marker=dict(
-
             color=industry_stats["avg_funding"],
-
             colorscale=[
                 "#BAB1BC",
                 "#8973A0",
                 "#715EA9"
             ],
-
             line=dict(width=0)
-
         ),
-
         hovertemplate=
         "<b>%{y}</b><br>"
         "Average Funding: $%{x:,.0f}"
         "<extra></extra>"
     )
     industry_fig.update_layout(
-
         height=420,
-
         paper_bgcolor="rgba(0,0,0,0)",
-
         plot_bgcolor="rgba(0,0,0,0)",
-
+        
         margin=dict(
             l=20,
             r=20,
             t=20,
             b=20
         ),
-
         showlegend=False,
-
         xaxis=dict(
             title="Average Funding",
             showgrid=False,
@@ -1363,41 +1287,32 @@ with col8:
             tickprefix="$",
             tickformat=".2s"
         ),
-
         yaxis=dict(
             title="",
             gridcolor="rgba(255,255,255,.08)"
         )
     )
-
     st.plotly_chart(
         industry_fig,
         use_container_width=True,
         config={"displayModeBar": False}
     )
-
 st.markdown("<br>", unsafe_allow_html=True)
-
 funding_time = df[
     ["first_funding_date", "total_funding"]
 ].copy()
-
 funding_time["first_funding_date"] = pd.to_datetime(
     funding_time["first_funding_date"],
     errors="coerce"
 )
-
 funding_time = funding_time.dropna(
     subset=["first_funding_date"]
 )
-
 funding_time["year"] = funding_time["first_funding_date"].dt.year
-
 funding_time = funding_time[
     (funding_time["year"] >= 1990) &
     (funding_time["year"] <= 2015)
 ]
-
 yearly_funding = (
     funding_time
     .groupby("year")
@@ -1407,52 +1322,52 @@ yearly_funding = (
     )
     .reset_index()
 )
-
 funding_time_fig = px.area(
     yearly_funding,
     x="year",
     y="startups",
     markers=True
 )
-
 funding_time_fig.update_traces(
     line=dict(
         width=3,
         color="#A5B4FC"
-    ),
+    ),  
     fillcolor="rgba(165, 180, 252, 0.12)",
+    
     marker=dict(
         size=7,
         color="#A5B4FC"
-    ),
+    ),    
     hovertemplate=(
         "<b>%{x}</b><br>"
         "Startups Funded: %{y:,}"
         "<extra></extra>"
     )
 )
-
 funding_time_fig.update_layout(
     height=430,
-
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-
-    margin=dict(l=20, r=20, t=25, b=20),
-
+   
+    margin=dict(
+        l=20,
+        r=20,
+        t=25,
+        b=20
+    ),   
     xaxis_title="Year",
     yaxis_title="Startups Receiving First Funding",
-
+    
     xaxis=dict(
         showgrid=False,
         dtick=2
     ),
-
+    
     yaxis=dict(
         gridcolor="rgba(255,255,255,0.07)",
         zeroline=False
-    ),
-
+    ),    
     hoverlabel=dict(
         bgcolor="#1B2038",
         bordercolor="#A5B4FC",
@@ -1460,28 +1375,22 @@ funding_time_fig.update_layout(
             color="white",
             size=13
         )
-    ),
-
+    ),    
     showlegend=False
 )
-
 st.markdown("<br>", unsafe_allow_html=True)
-
 render_html(
     chart_header(
         "📈 Funding Activity Over Time",
         "Number of startups receiving their first funding across different years."
     )
 )
-
 st.plotly_chart(
     funding_time_fig,
     use_container_width=True,
     config={"displayModeBar": False}
 )
-
 st.markdown("<br><br>", unsafe_allow_html=True)
-
 render_html("""
 <div class="chart-header">
     <div class="chart-icon">🔥</div>
@@ -1492,9 +1401,7 @@ render_html("""
     </div>
 </div>
 """)
-
 heatmap_df = df.dropna(subset=["industry", "status"]).copy()
-
 heatmap_df["primary_industry"] = (
     heatmap_df["industry"]
     .astype(str)
@@ -1502,23 +1409,19 @@ heatmap_df["primary_industry"] = (
     .str[0]
     .str.strip()
 )
-
 top_industries = (
     heatmap_df["primary_industry"]
     .value_counts()
     .head(10)
     .index
 )
-
 heatmap_df = heatmap_df[
     heatmap_df["primary_industry"].isin(top_industries)
 ]
-
 status_matrix = pd.crosstab(
     heatmap_df["primary_industry"],
     heatmap_df["status"]
 )
-
 status_matrix = status_matrix.loc[
     status_matrix.sum(axis=1)
     .sort_values(ascending=False)
@@ -1528,13 +1431,11 @@ fig_heatmap = px.imshow(
     status_matrix,
     text_auto=True,
     aspect="auto",
-
     labels={
         "x": "Startup Status",
         "y": "Industry",
         "color": "Startups"
     },
-
     color_continuous_scale=[
         [0.0, "#111827"],
         [0.35, "#4338CA"],
@@ -1544,37 +1445,30 @@ fig_heatmap = px.imshow(
 )
 fig_heatmap.update_layout(
     height=520,
-
     margin=dict(
         l=20,
         r=20,
         t=50,
         b=20
     ),
-
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-
     font=dict(
         color="#D8DEE9",
         size=13
     ),
-
     xaxis=dict(
         title=None,
         side="top"
     ),
-
     yaxis=dict(
         title=None
     ),
-
     coloraxis_colorbar=dict(
         title="Startups",
         thickness=12
     )
 )
-
 fig_heatmap.update_traces(
     hovertemplate=
         "<b>%{y}</b><br>"
@@ -1587,48 +1481,34 @@ st.plotly_chart(
     use_container_width=True,
     config={"displayModeBar": False}
 )
-
 render_html("""
 <div class="section-header">
-
     <div class="section-line"></div>
-
     <div class="section-text">
-
         <h2>🔍 Startup Explorer</h2>
-
         <p>
             Filter and explore startups interactively.
         </p>
-
     </div>
-
 </div>
 """)
-
 filter1, filter2, filter3, filter4 = st.columns(4)
 with filter1:
-
     selected_country = st.selectbox(
         "🌍 Country",
         ["All"] + sorted(df["country"].dropna().unique())
     )
-
 with filter2:
-
     selected_industry = st.selectbox(
         "🏭 Industry",
         ["All"] + sorted(df["industry"].dropna().unique())
     )
-
 with filter3:
-
     selected_status = st.selectbox(
         "📊 Status",
         ["All"] + sorted(df["status"].dropna().unique())
     )
 with filter4:
-
     selected_funding = st.slider(
         "💰 Minimum Funding",
         float(df["total_funding"].min()),
@@ -1655,28 +1535,23 @@ if selected_status != "All":
 filtered_df = filtered_df[
     filtered_df["total_funding"] >= selected_funding
 ]
-
 kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 with kpi1:
-
     st.metric(
         "📈 Startups",
         len(filtered_df)
     )
 with kpi2:
-
     st.metric(
         "💰 Avg Funding",
         f"${filtered_df['total_funding'].mean()/1e6:.1f}M"
     )
 with kpi3:
-
     st.metric(
         "🌍 Countries",
         filtered_df["country"].nunique()
     )
 with kpi4:
-
     st.metric(
         "📅 Avg Age",
         f"{filtered_df['company_age'].mean():.1f} yrs"
@@ -1705,30 +1580,24 @@ st.download_button(
     "startup_data.csv",
     "text/csv"
 )
-
 st.markdown("<br>", unsafe_allow_html=True)
 insight_df = df.copy()
-
 insight_df["total_funding"] = pd.to_numeric(
     insight_df["total_funding"],
     errors="coerce"
 )
-
 insight_df["funding_rounds"] = pd.to_numeric(
     insight_df["funding_rounds"],
     errors="coerce"
 )
-
 insight_df["company_age"] = pd.to_numeric(
     insight_df["company_age"],
     errors="coerce"
 )
-
 insight_df["first_funding_date"] = pd.to_datetime(
     insight_df["first_funding_date"],
     errors="coerce"
 )
-
 funding_years = (
     insight_df
     .dropna(subset=["first_funding_date"])
@@ -1736,13 +1605,11 @@ funding_years = (
         funding_year=lambda x: x["first_funding_date"].dt.year
     )
 )
-
 funding_year_counts = (
     funding_years["funding_year"]
     .value_counts()
     .sort_index()
 )
-
 if not funding_year_counts.empty:
     peak_funding_year = int(funding_year_counts.idxmax())
     peak_funding_count = int(funding_year_counts.max())
@@ -1757,7 +1624,6 @@ industry_status = (
     .size()
     .unstack(fill_value=0)
 )
-
 if "acquired" in industry_status.columns:
     top_acquired_industry = industry_status["acquired"].idxmax()
     top_acquired_count = int(
@@ -1772,43 +1638,34 @@ funding_analysis = insight_df[
     & insight_df["funding_rounds"].notna()
     & (insight_df["total_funding"] > 0)
 ]
-
 if len(funding_analysis) > 1:
     funding_correlation = funding_analysis[
         ["funding_rounds", "total_funding"]
     ].corr().iloc[0, 1]
 else:
     funding_correlation = 0
-
 if funding_correlation >= 0.5:
     funding_relationship = "a strong positive relationship"
-
 elif funding_correlation >= 0.2:
     funding_relationship = "a moderate positive relationship"
-
 elif funding_correlation > 0:
     funding_relationship = "a weak positive relationship"
-
 elif funding_correlation <= -0.2:
     funding_relationship = "a negative relationship"
-
 else:
     funding_relationship = "little overall relationship"
-
 status_age = (
     insight_df
     .dropna(subset=["status", "company_age"])
     .groupby("status")["company_age"]
     .mean()
 )
-
 if not status_age.empty:
     oldest_status = status_age.idxmax()
     oldest_status_age = status_age.max()
 else:
     oldest_status = "N/A"
     oldest_status_age = 0
-
 print("Peak funding year:", peak_funding_year)
 print("Peak funding count:", peak_funding_count)
 
@@ -1822,57 +1679,41 @@ print("Oldest status age:", oldest_status_age)
 
 render_html("""
 <div class="section-header">
-
     <div class="section-line"></div>
-
     <div class="section-text">
-
         <h2>💡 Key Analytical Insights</h2>
-
         <p>
             Data-driven insights generated automatically from the dataset.
         </p>
-
     </div>
-
 </div>
 """)
 
 total_startups = len(df)
-
 top_country = df["country"].mode()[0]
-
 top_industry = (
     df["industry"]
     .mode()[0]
     .split("|")[0]
 )
-
 avg_funding = df["total_funding"].mean()
-
 avg_age = df["company_age"].mean()
-
 operating_pct = (
     (
         df["status"] == "operating"
     ).mean() * 100
 )
-
 left, right = st.columns(2, gap="large")
-
 with left:
 
     render_html(f"""
     <div class="insight-card">
-
         <div class="insight-icon">
             💰
         </div>
-
         <div class="insight-title">
             Funding Momentum
         </div>
-
         <div class="insight-text">
             Startup funding peaked in
             <b>{peak_funding_year}</b>,
@@ -1880,78 +1721,60 @@ with left:
             <b>{peak_funding_count:,}</b>
             startups receiving their first investment.
         </div>
-
     </div>
     """)
-
 with right:
 
     render_html(f"""
     <div class="insight-card">
-
         <div class="insight-icon">
             🏆
         </div>
-
         <div class="insight-title">
             Industry Performance
         </div>
-
         <div class="insight-text">
             <b>{top_acquired_industry}</b>
             recorded the highest number of acquisitions
             (<b>{top_acquired_count}</b> startups),
             making it the strongest acquisition sector.
         </div>
-
     </div>
     """)
-      
-
 left2, right2 = st.columns(2, gap="large")
-
 with left2:
 
     render_html(f"""
     <div class="insight-card">
-
         <div class="insight-icon">
             📈
         </div>
-
         <div class="insight-title">
             Investment Behaviour
         </div>
-
         <div class="insight-text">
             Funding rounds and total funding show
             <b>{funding_relationship}</b>,
             indicating that startups with more funding rounds
             generally raise more capital.
         </div>
-
     </div>
     """)
 
 with right2:
-
     render_html(f"""
     <div class="insight-card">
-
         <div class="insight-icon">
             🏛
         </div>
-
         <div class="insight-title">
             Startup Lifecycle
         </div>
-
         <div class="insight-text">
             <b>{oldest_status.upper()}</b>
             startups have the highest average age
             of
             <b>{oldest_status_age:.1f} years</b>.
         </div>
-
     </div>
     """)
