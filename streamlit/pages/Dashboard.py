@@ -51,24 +51,21 @@ def inject_custom_css():
     st.markdown(
         f"""
         <style>
-        /* ---------- Premium Font Import ---------- */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+        /* ---------- Premium Font Import (Analytics theme) ---------- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
         html, body, [class*="css"] {{
             font-family: 'Inter', 'Segoe UI', sans-serif;
             -webkit-font-smoothing: antialiased;
         }}
 
-        /* ---------- Animated Aurora Background ---------- */
+        /* ---------- Aurora Background (Analytics theme) ---------- */
         .stApp {{
             background:
-                radial-gradient(circle at 12% 8%, rgba(56,189,248,0.14), transparent 42%),
-                radial-gradient(circle at 88% 5%, rgba(168,85,247,0.16), transparent 48%),
-                radial-gradient(circle at 60% 90%, rgba(45,212,191,0.10), transparent 50%),
-                radial-gradient(circle at 25% 70%, rgba(56,189,248,0.06), transparent 45%),
-                {COLOR_BG};
-            background-size: 200% 200%;
-            animation: auroraDrift 24s ease-in-out infinite;
+                radial-gradient(circle at 12% 15%, rgba(124,58,237,0.14), transparent 38%),
+                radial-gradient(circle at 88% 8%, rgba(37,99,235,0.14), transparent 38%),
+                radial-gradient(circle at 50% 95%, rgba(34,211,238,0.08), transparent 40%),
+                #0a0e1a;
             color: {COLOR_TEXT};
         }}
 
@@ -78,7 +75,7 @@ def inject_custom_css():
             100% {{ background-position: 0% 0%; }}
         }}
         @keyframes fadeSlideUp {{
-            from {{ opacity: 0; transform: translateY(14px); }}
+            from {{ opacity: 0; transform: translateY(12px); }}
             to   {{ opacity: 1; transform: translateY(0); }}
         }}
         @keyframes shimmerBorder {{
@@ -100,8 +97,8 @@ def inject_custom_css():
 
         /* Main block container spacing */
         .block-container {{
-            padding-top: 1.6rem !important;
-            padding-bottom: 2rem !important;
+            padding-top: 1.8rem;
+            padding-bottom: 2rem;
             max-width: 1440px;
         }}
 

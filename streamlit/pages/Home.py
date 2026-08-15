@@ -29,30 +29,92 @@ st.markdown("""
         color: #e5e7eb;
     }
 
+    /* ---------- sidebar (matches Dashboard.py nav) ---------- */
     section[data-testid="stSidebar"] {
-        background-color: #0d1220;
-        border-right: 1px solid rgba(255,255,255,0.06);
+        background: linear-gradient(180deg, rgba(15,23,42,0.98) 0%, rgba(11,17,32,0.99) 100%);
+        backdrop-filter: blur(18px);
+        border-right: 1px solid rgba(148,163,184,0.10);
     }
 
-    /* ---------- sidebar nav ---------- */
-    section[data-testid="stSidebar"] div.stButton > button {
-        background: #10192b !important;
-        color: #cbd5e1 !important;
-        border: 1px solid rgba(255,255,255,0.06) !important;
-        border-radius: 10px !important;
-        font-weight: 500 !important;
-        padding: 0.6em 1em !important;
-        justify-content: flex-start !important;
-        text-align: left !important;
-        box-shadow: none !important;
+    section[data-testid="stSidebar"] .stButton button {
+        width: 100%;
+        text-align: left;
+        background: rgba(255,255,255,0.02);
+        color: #F8FAFC;
+        border: 1px solid rgba(148,163,184,0.08);
+        border-radius: 12px;
+        padding: 0.6rem 1rem;
+        margin-bottom: 6px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }
 
-    section[data-testid="stSidebar"] div.stButton > button:hover {
-        background: #16213a !important;
-        border-color: rgba(255,255,255,0.12) !important;
-        color: #f8fafc !important;
-        transform: none !important;
-        filter: none !important;
+    section[data-testid="stSidebar"] .stButton button::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(56,189,248,0.18), rgba(168,85,247,0.18));
+        opacity: 0;
+        transition: opacity 0.28s ease;
+    }
+
+    section[data-testid="stSidebar"] .stButton button:hover {
+        border: 1px solid rgba(56,189,248,0.45);
+        color: #38BDF8;
+        transform: translateX(5px);
+        box-shadow: 0 4px 18px rgba(56,189,248,0.18);
+    }
+
+    section[data-testid="stSidebar"] .stButton button:hover::before { opacity: 1; }
+    section[data-testid="stSidebar"] .stButton button:active { transform: translateX(5px) scale(0.98); }
+
+    .nav-active {
+        background: linear-gradient(90deg, rgba(56,189,248,0.16), rgba(168,85,247,0.10)) !important;
+        border: 1px solid rgba(56,189,248,0.4) !important;
+        border-left: 3px solid #38BDF8 !important;
+        border-radius: 10px;
+        padding: 0.6rem 1rem 0.6rem 0.85rem;
+        margin-bottom: 6px;
+        font-weight: 700;
+        color: #38BDF8 !important;
+        font-size: 0.92rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-item {
+        border-radius: 10px;
+        padding: 0.6rem 1rem;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #94A3B8;
+        font-size: 0.92rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.25s ease;
+    }
+
+    .nav-item:hover {
+        background: rgba(148,163,184,0.06);
+        color: #F8FAFC;
+    }
+
+    .version-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #2DD4BF;
+        background: rgba(45,212,191,0.10);
+        border: 1px solid rgba(45,212,191,0.28);
+        padding: 3px 10px;
+        border-radius: 999px;
     }
 
     /* ---------- hero ---------- */
@@ -317,20 +379,51 @@ def row_card(icon, title, text):
 
 
 # --------------------------------------------------
-# SIDEBAR
+# SIDEBAR (same nav implementation as Dashboard.py's render_sidebar)
 # --------------------------------------------------
 
 with st.sidebar:
-    st.markdown("### 🚀 Startup Analytics")
-    st.caption("NAVIGATION")
-    st.button("🏠  Home", use_container_width=True)
-    st.button("📊  Dashboard", use_container_width=True)
-    st.button("📈  Analytics", use_container_width=True)
-    st.button("🌍  Explorer", use_container_width=True)
-    st.button("🤖  Prediction", use_container_width=True)
-    st.button("ℹ️  About", use_container_width=True)
-    st.markdown("---")
-    st.caption("Version 1.0")
+    st.markdown(
+        """
+        <div style="display:flex; align-items:center; gap:12px; padding:0.6rem 0 1rem 0;">
+            <div>
+                <div style="font-family:'Manrope','Inter',sans-serif; font-weight:700; font-size:1.5rem; color:#F8FAFC; letter-spacing:-0.01em;">Startup Success Predictor</div>
+                <div style="font-size:0.72rem; color:#94A3B8; letter-spacing:0.02em;">Startup Analytics Platform</div>
+            </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:1.4rem;">
+            <span class="version-badge">✓ Machine Learning Model </span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        "<div style='font-size:0.72rem; font-weight:700; letter-spacing:0.1em; "
+        "text-transform:uppercase; color:#94A3B8; margin-bottom:0.6rem;'>Navigation</div>",
+        unsafe_allow_html=True
+    )
+
+    nav_items = [
+        ("🏠", "Home"),
+        ("📊", "Dashboard"),
+        ("📈", "Analytics"),
+        ("🔍", "Explorer"),
+        ("🤖", "Prediction"),
+        ("ℹ️", "About"),
+    ]
+
+    if "active_nav" not in st.session_state:
+        st.session_state.active_nav = "Home"
+
+    for icon, label in nav_items:
+        is_active = st.session_state.active_nav == label
+        if is_active:
+            st.markdown(f'<div class="nav-active">{icon} &nbsp;{label}</div>', unsafe_allow_html=True)
+        else:
+            if st.button(f"{icon}   {label}", key=f"nav_{label}", use_container_width=True):
+                st.session_state.active_nav = label
+                st.rerun()
 
 # --------------------------------------------------
 # 🚀 HERO SECTION (heading + tagline left, illustration right)
