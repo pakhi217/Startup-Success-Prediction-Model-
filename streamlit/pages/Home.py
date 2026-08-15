@@ -2,10 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import textwrap
 
-# --------------------------------------------------
-# PAGE CONFIG
-# --------------------------------------------------
-
+# PAGE CONFIGURE
 st.set_page_config(
     page_title="Startup Success Analytics Platform",
     page_icon="🚀",
@@ -13,10 +10,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --------------------------------------------------
 # GLOBAL THEME
-# --------------------------------------------------
-
 st.markdown("""
 <style>
 
@@ -378,10 +372,8 @@ def row_card(icon, title, text):
     """), unsafe_allow_html=True)
 
 
-# --------------------------------------------------
-# SIDEBAR (same nav implementation as Dashboard.py's render_sidebar)
-# --------------------------------------------------
 
+# SIDEBAR
 with st.sidebar:
     st.markdown(
         """
@@ -425,10 +417,8 @@ with st.sidebar:
                 st.session_state.active_nav = label
                 st.rerun()
 
-# --------------------------------------------------
-# 🚀 HERO SECTION (heading + tagline left, illustration right)
-# --------------------------------------------------
 
+# HERO SECTION (heading + tagline left, illustration right)
 hero_left, hero_right = st.columns([1.05, 1], gap="large")
 
 with hero_left:
@@ -524,10 +514,8 @@ with hero_right:
 st.write("")
 st.write("")
 
-# --------------------------------------------------
-# 📖 PLATFORM OVERVIEW
-# --------------------------------------------------
 
+# PLATFORM OVERVIEW
 st.markdown('<div class="section-heading">📖 Platform Overview</div>', unsafe_allow_html=True)
 
 ov_l, ov_r = st.columns([2, 1])
@@ -555,10 +543,8 @@ with ov_r:
 st.write("")
 st.write("")
 
-# --------------------------------------------------
-# ⭐ KEY BENEFITS (staggered / zigzag layout)
-# --------------------------------------------------
 
+# KEY BENEFITS 
 st.markdown('<div class="section-heading">⭐ Key Benefits</div>', unsafe_allow_html=True)
 
 kb1, kb2, kb3, kb4 = st.columns(4)
@@ -574,10 +560,8 @@ with kb4:
 st.write("")
 st.write("")
 
-# --------------------------------------------------
-# 💡 WHY CHOOSE THIS PLATFORM (alternating row cards)
-# --------------------------------------------------
 
+#  WHY CHOOSE THIS PLATFORM 
 st.markdown('<div class="section-heading">💡 Why Choose This Platform</div>', unsafe_allow_html=True)
 
 wc1, wc2 = st.columns(2)
@@ -597,10 +581,8 @@ with wc4:
 st.write("")
 st.write("")
 
-# --------------------------------------------------
-# 🚀 CALL TO ACTION
-# --------------------------------------------------
 
+# CALL TO ACTION
 st.markdown("""
 <div class="cta-box">
     <div class="cta-heading">🚀 Ready to Explore Startup Analytics?</div>
@@ -619,10 +601,7 @@ with cta_c:
 st.write("")
 st.write("")
 
-# --------------------------------------------------
-# 📄 FOOTER
-# --------------------------------------------------
-
+# FOOTER
 st.markdown("---")
 st.markdown('<div class="footer-title">🚀 Startup Success Analytics Platform</div>', unsafe_allow_html=True)
 st.markdown('<div class="footer-tagline">AI Powered Startup Prediction & Business Intelligence Platform</div>', unsafe_allow_html=True)
