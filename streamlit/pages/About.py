@@ -44,6 +44,33 @@ st.markdown("""
         color: #f8fafc !important;
     }
 
+    .nav-active {
+        background: linear-gradient(90deg, rgba(56,189,248,0.16), rgba(168,85,247,0.10)) !important;
+        border: 1px solid rgba(56,189,248,0.4) !important;
+        border-left: 3px solid #38BDF8 !important;
+        border-radius: 10px;
+        padding: 0.6rem 1rem 0.6rem 0.85rem;
+        margin-bottom: 6px;
+        font-weight: 700;
+        color: #38BDF8 !important;
+        font-size: 0.92rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .version-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #2DD4BF;
+        background: rgba(45,212,191,0.10);
+        border: 1px solid rgba(45,212,191,0.28);
+        padding: 3px 10px;
+        border-radius: 999px;
+    }
+
     @keyframes fadeUp {
         from { opacity: 0; transform: translateY(16px); }
         to { opacity: 1; transform: translateY(0); }
@@ -202,19 +229,39 @@ def styled_card(icon, title, text, color="purple", side_class="", cls="fade-in")
 # SIDEBAR
 # --------------------------------------------------
 with st.sidebar:
-    st.markdown("### 🚀 Startup Analytics")
-    st.caption("NAVIGATION")
-    if st.button("🏠  Home", use_container_width=True):
-        st.switch_page("pages/Home.py")
-    if st.button("📊  Dashboard", use_container_width=True):
-        st.switch_page("pages/Dashboard.py")
-    if st.button("📈  Analytics", use_container_width=True):
-        st.switch_page("pages/Analytics.py")
-    
-    if st.button("🤖  Prediction", use_container_width=True):
-        st.switch_page("pages/Prediction.py")
-    if st.button("ℹ️  About", use_container_width=True):
-        st.switch_page("pages/About.py")
+    st.markdown(
+        """
+        <div style="padding:0.6rem 0 1rem 0;">
+            <div style="font-family:'Manrope','Inter',sans-serif; font-weight:700; font-size:1.5rem; color:#F8FAFC; letter-spacing:-0.01em;">Startup Success Predictor</div>
+            <div style="font-size:0.72rem; color:#94A3B8; letter-spacing:0.02em;">Startup Analytics Platform</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:1.4rem;">
+            <span class="version-badge">✓ Machine Learning Model </span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        "<div style='font-size:0.72rem; font-weight:700; letter-spacing:0.1em; "
+        "text-transform:uppercase; color:#94A3B8; margin-bottom:0.6rem;'>Navigation</div>",
+        unsafe_allow_html=True,
+    )
+
+    nav_items = [("🏠", "Home"), ("📊", "Dashboard"), ("📈", "Analytics"), ("🔍", "Explorer"), ("🤖", "Prediction"), ("ℹ️", "About")]
+    page_map = {
+        "Home": "Home.py",
+        "Dashboard": "Dashboard.py",
+        "Analytics": "Analytics.py",
+        "Explorer": "Explorer.py",
+        "Prediction": "Prediction.py",
+        "About": "About.py",
+    }
+    for icon, label in nav_items:
+        if label == "About":
+            st.markdown(f'<div class="nav-active">{icon} &nbsp;{label}</div>', unsafe_allow_html=True)
+        else:
+            if st.button(f"{icon}   {label}", key=f"nav_{label}", use_container_width=True):
+                st.switch_page(f"pages/{page_map[label]}")
     st.markdown("---")
     st.caption("Version 1.0")
 
