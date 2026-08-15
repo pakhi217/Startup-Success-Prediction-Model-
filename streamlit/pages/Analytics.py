@@ -12,7 +12,6 @@ def render_html(html: str) -> None:
     cleaned = "\n".join(line.lstrip() for line in html.strip("\n").splitlines())
     st.markdown(cleaned, unsafe_allow_html=True)
 
-
 st.set_page_config(
     page_title="Analytics",
     page_icon="🚀",
@@ -30,7 +29,6 @@ COLOR_MUTED = "#94A3B8"
 COLOR_DANGER = "#F87171"
 
 CHART_COLORWAY = [COLOR_PRIMARY, COLOR_PURPLE, COLOR_MINT, "#F472B6", "#FACC15", "#818CF8"]
-
 COUNTRY_ISO3 = {
     "United States": "USA", "USA": "USA", "US": "USA", "India": "IND",
     "United Kingdom": "GBR", "UK": "GBR", "Germany": "DEU", "Canada": "CAN",
@@ -39,7 +37,6 @@ COUNTRY_ISO3 = {
     "Ireland": "IRL", "Sweden": "SWE", "Russia": "RUS", "South Korea": "KOR",
     "Italy": "ITA", "Japan": "JPN", "Switzerland": "CHE", "Chile": "CHL",
 }
-
 import re as _re
 _ISO3_PATTERN = _re.compile(r"^[A-Z]{3}$")
 
@@ -47,8 +44,6 @@ def inject_custom_css():
     st.markdown(
         f"""
         <style>
-
-        /* Google font */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
         html,
@@ -57,8 +52,6 @@ def inject_custom_css():
             font-family: 'Inter', 'Segoe UI', sans-serif;
             -webkit-font-smoothing: antialiased;
         }}
-
-        /* Aurora Background */
         .stApp {{
     background:
         radial-gradient(circle at 12% 15%, rgba(124,58,237,0.14), transparent 38%),
@@ -66,92 +59,63 @@ def inject_custom_css():
         radial-gradient(circle at 50% 95%, rgba(34,211,238,0.08), transparent 40%),
         #0a0e1a;
 }}
-
-        /* Animations */
-
         @keyframes auroraDrift {{
             0% {{
                 background-position: 0% 0%;
             }}
-
             50% {{
                 background-position: 100% 60%;
             }}
-
             100% {{
                 background-position: 0% 0%;
             }}
         }}
-
         @keyframes fadeSlideUp {{
             from {{
                 opacity: 0;
                 transform: translateY(12px);
             }}
-
             to {{
                 opacity: 1;
                 transform: translateY(0);
             }}
         }}
-
-        /* Global Layout */
-
         .block-container {{
             max-width: 1440px;
             padding-top: 1.8rem;
             padding-bottom: 2rem;
         }}
-
         #MainMenu {{
             visibility: hidden;
         }}
-
         footer {{
             visibility: hidden;
         }}
-
         header[data-testid="stHeader"] {{
             background: transparent;
         }}
-        
-            /* HERO SECTION */
 
     .hero-section {{
 
         display:grid;
         grid-template-columns: 1.2fr 1fr;
-
         align-items:center;
-
         gap:40px;
-
         min-height:520px;
-
         margin-bottom:0px;
-
         animation:fadeSlideUp .8s ease;
-
     }}
-
     .hero-left {{
-
         display:flex;
         flex-direction:column;
-
     }}
-
     .hero-right {{
-
         display:flex;
         justify-content:center;
         align-items:center;
         position:relative;
-
     }}  
-
     .hero-badge {{
-
     display:inline-block;
     width:fit-content;
     padding:8px 16px;
@@ -164,54 +128,39 @@ def inject_custom_css():
     margin-bottom:20px;
 
 }}
-
 .hero-title {{
-
     font-size:70px;
     line-height:1;
     font-weight:800;
     color:white;
     letter-spacing:-2px;
     margin-bottom:22px;
-
 }}
-
 .hero-title span {{
-
     background:linear-gradient(
         90deg,
         #7C3AED,
         #3B82F6
     );
-
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     background-clip:text;
 
 }}
-
 .hero-subtitle {{
-
     font-size:20px;
     line-height:1.9;
     color:#AAB3D3;
     max-width:620px;
     margin-bottom:28px;
-
 }}
 
-
-
-/* SECTION HEADINGS */
-
 .section-header{{
-
     display:flex;
     align-items:flex-start;
     gap:16px;
     margin-top:10px;
     margin-bottom:35px;
-
 }}
 .section-text h2{{
     margin:0;
@@ -221,56 +170,39 @@ def inject_custom_css():
         margin-bottom:2px;
          white-space: nowrap;
 }}
-
 .section-text p{{
     margin-top:4px;
     color:#A7B0C5;
 }}
-
 .section-line{{
-
     width:6px;
     height:44px;
     border-radius:999px;
     background:linear-gradient(
         180deg,
         #7C3AED,
-        #3B82F6
-    );
-
+        #3B82F6 );
 }}
 .section-content{{
     display: flex;
     flex-direction: column;
 }}
 .section-title{{
-
     font-size:36px;
     font-weight:800;
     color:white;
     margin-bottom:4px;
      white-space: nowrap;
-
 }}
-
 .section-subtitle{{
-
     color:#94A3B8;
     font-size:17px;
-
 }}
-
-
-/* WIDGET CARD */
-
 .widget-container {{
-
     margin-top:35px;
 
 }}
-
 .widget-card {{
-
     width:225px;
     padding:18px;
     border-radius:22px;
@@ -279,17 +211,12 @@ def inject_custom_css():
     background:linear-gradient(
         180deg,
         rgba(255,255,255,.06),
-        rgba(255,255,255,.03)
-    );
-
+        rgba(255,255,255,.03) );
     border:1px solid rgba(255,255,255,.08);
     backdrop-filter:blur(18px);
     transition:.35s;
-
 }}
-
 .widget-card::before {{
-
     content:"";
     position:absolute;
     top:-70px;
@@ -299,31 +226,21 @@ def inject_custom_css():
     border-radius:50%;
     background:rgba(124,58,237,.18);
     filter:blur(60px);
-
 }}
-
 .widget-card:hover {{
-
     transform:translateY(-10px);
     border-color:rgba(124,58,237,.45);
     box-shadow:
         0 0 50px rgba(124,58,237,.18);
-
 }}
-
 .widget-top {{
-
     display:flex;
     justify-content:space-between;
     align-items:center;
    margin-bottom:18px;
-
 }}
-
 .widget-icon {{
-
     width:46px;
-
 height:46px;
 border-radius:14px;
 font-size:18px;
@@ -333,560 +250,357 @@ font-size:18px;
     background:linear-gradient(
         135deg,
         rgba(124,58,237,.25),
-        rgba(59,130,246,.22)
-    );
-
+        rgba(59,130,246,.22) );
 }}
-
 .widget-footer {{
-
     margin-top:10px;
     color:#A78BFA;
     font-size:13px;
     font-weight:600;
     transition:.3s;
-
 }}
-
 .widget-card:hover .widget-footer {{
-
     color:white;
     letter-spacing:.5px;
-
 }}
-
 .widget-status {{
-
     padding:5px 10px;
     border-radius:999px;
     font-size:11px;
     font-weight:700;
     color:#4ADE80;
     background:rgba(74,222,128,.12);
-
 }}
-
 .widget-value {{
-
     font-size:38px;
     font-weight:800;
     color:white;
-
 }}
-
 .widget-title {{
-
     margin-top:4px;
     font-size:16px;
     font-weight:700;
     color:white;
-
 }}
-
 .widget-footer {{
-
 margin-top:10px;
 font-size:13px;
     color:#9CA3AF;
-
-
 }}
-
 .card-two .widget-status {{
-
     color:#60A5FA;
     background:rgba(96,165,250,.12);
-
 }}
-
 .floating-card {{
-
     position:absolute;
     transition:.35s;
     z-index:1;
-
 }}
-
 .floating-card:hover {{
     z-index:100;
-
 }}
 .card-one {{
-
     top:-100px;
     left:100px;
-
 }}
-
 .card-two {{
-
     top:0px;
-
     left:230px;
-
 }}
-/* Chart Card */
-
 .chart-card {{
-
-   .chart-card {{
-
-    background:linear-gradient(
-        180deg,
-        rgba(255,255,255,.05),
-        rgba(255,255,255,.025)
-    );
-
-    border:1px solid rgba(255,255,255,.08);
-
-    border-radius:28px;
-
-    padding:28px;
-
-    backdrop-filter:blur(18px);
-
-    transition:.35s;
-
-    margin-bottom:25px;
-
+        background:linear-gradient(
+            180deg,
+            rgba(255,255,255,.05),
+            rgba(255,255,255,.025)
+        );
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:28px;
+        padding:28px;
+        backdrop-filter:blur(18px);
+        transition:.35s;
+        margin-bottom:25px;
 }}
-
-}}
-
 .chart-card:hover {{
-
     border-color:rgba(124,58,237,.30);
-
     box-shadow:
         0 18px 40px rgba(124,58,237,.10);
-
 }}
-
 .chart-title {{
-
     font-size:24px;
-
     font-weight:700;
-
     color:white;
-
     margin-bottom:8px;
-
 }}
-
 .chart-description {{
-
     font-size:15px;
-
     color:#94A3B8;
-
     margin-bottom:25px;
-
 }}
 .chart-header{{
     display:flex;
     align-items:center;
     gap:18px;
-
-    padding: 10px 16px;
+    padding:10px 16px;
     margin-bottom:16px;
-
     background:rgba(255,255,255,.05);
-
     border:1px solid rgba(255,255,255,.08);
-
     border-radius:20px;
-
     backdrop-filter:blur(18px);
-
     transition:all .35s ease;
-
     box-shadow:
         0 8px 30px rgba(0,0,0,.18);
 }}
 .chart-header:hover{{
-
     transform:translateY(-5px);
-
     border-color:rgba(255,255,255,.20);
-
     box-shadow:
         0 15px 35px rgba(0,0,0,.30),
         0 0 25px rgba(168,85,247,.18);
 }}
 .chart-icon{{
-
-   width:42px;
-height:42px;
-
-font-size:20px;
-
-border-radius:12px;
-
+    width:42px;
+    height:42px;
+    font-size:20px;
+    border-radius:12px;
     display:flex;
     align-items:center;
     justify-content:center;
-
-
     background:linear-gradient(
         135deg,
         rgba(192,132,252,.35),
         rgba(165,180,252,.18)
     );
-
     border:1px solid rgba(255,255,255,.12);
-
     backdrop-filter:blur(20px);
-
     transition:.35s;
 }}
 .chart-header:hover .chart-icon{{
-
     transform:
         rotate(-6deg)
         scale(1.08);
-
     box-shadow:
         0 0 25px rgba(192,132,252,.30);
 }}
 .chart-title{{
-
     font-size:26px;
-
     font-weight:700;
-
     color:white;
-
     margin-bottom:4px;
 }}
-
 .chart-subtitle{{
-
     color:#B6BDD2;
-
-   font-size:13px;
-   opacity:.75;
-
+    font-size:13px;
+    opacity:.75;
     line-height:1.5;
 }}
-
 @keyframes floatCard{{
-
     0%{{
         transform:translateY(0px);
     }}
-
     50%{{
         transform:translateY(-3px);
     }}
-
     100%{{
         transform:translateY(0px);
     }}
 }}
-
 .chart-header{{
-
     animation:floatCard 5s ease-in-out infinite;
 }}
-
-/* AI insights */
 .insight-card{{
     width:100%;
-
     box-sizing:border-box;
-
     background:rgba(255,255,255,.05);
-
     backdrop-filter:blur(18px);
-
     border:1px solid rgba(255,255,255,.08);
-
     border-radius:22px;
-
     padding:24px;
-
     min-height:220px;
-
     transition:.35s;
-
     margin-bottom:20px;
-
 }}
 .insight-card:hover{{
-
     transform:translateY(-6px);
-
     border-color:#7C6CFF;
-
     box-shadow:0 0 30px rgba(124,108,255,.25);
-
 }}
-
 .insight-icon{{
-
     font-size:34px;
-
     margin-bottom:15px;
-
 }}
-
 .insight-title{{
-
     font-size:22px;
-
     font-weight:700;
-
     color:white;
-
     margin-bottom:10px;
-
 }}
-
 .insight-text{{
-
     color:#C9D1E8;
-
     line-height:1.8;
-
     font-size:15px;
-
 }}
-
 .sidebar{{
-
-position:fixed;
-
-left:0;
-
-top:0;
-
-width:250px;
-
-height:100vh;
-
-background:#0F172A;
-
-padding:30px 22px;
-
-border-right:1px solid rgba(255,255,255,.08);
-
-z-index:9999;
-
-overflow-y:auto;
-
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    background:#0F172A;
+    padding:30px 22px;
+    border-right:1px solid rgba(255,255,255,.08);
+    z-index:9999;
+    overflow-y:auto;
 }}
-
 .sidebar-title{{
-
-font-size:30px;
-
-font-weight:700;
-
-color:white;
-
-margin-bottom:10px;
-
+    font-size:30px;
+    font-weight:700;
+    color:white;
+    margin-bottom:10px;
 }}
-
 .sidebar-subtitle{{
-
-color:#8B93A7;
-
-font-size:13px;
-
-margin-bottom:35px;
-
-letter-spacing:1px;
-
+    color:#8B93A7;
+    font-size:13px;
+    margin-bottom:35px;
+    letter-spacing:1px;
 }}
-
 .sidebar-button{{
-
-display:block;
-
-width:100%;
-
-padding:16px 20px;
-
-margin-bottom:18px;
-
-background:#1B2438;
-
-border-radius:18px;
-
-color:white;
-
-text-decoration:none;
-
-font-size:19px;
-
-transition:.25s;
-
-box-sizing:border-box;
-
+    display:block;
+    width:100%;
+    padding:16px 20px;
+    margin-bottom:18px;
+    background:#1B2438;
+    border-radius:18px;
+    color:white;
+    text-decoration:none;
+    font-size:19px;
+    transition:.25s;
+    box-sizing:border-box;
 }}
-
 .sidebar-button:hover{{
-
-background:#6D4AFF;
-
-transform:translateX(6px);
-
+    background:#6D4AFF;
+    transform:translateX(6px);
 }}
-
 .main .block-container{{
-
     margin-left:250px;
-
     max-width:calc(100% - 270px);
-
     padding-left:3rem;
-
     padding-right:3rem;
-
 }}
 .page-wrapper{{
-
-margin-left:280px;
-
-padding-right:30px;
-
+    margin-left:280px;
+    padding-right:30px;
 }}
-
 .menu-button{{
-
-position:fixed;
-
-top:25px;
-
-left:25px;
-
-width:58px;
-
-height:58px;
-
-border-radius:18px;
-
-background:linear-gradient(135deg,#6D4AFF,#8B5CF6);
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:28px;
-
-color:white;
-
-cursor:pointer;
-
-box-shadow:0 8px 25px rgba(109,74,255,.45);
-
-z-index:99999;
-
-transition:.3s;
-
+    position:fixed;
+    top:25px;
+    left:25px;
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#6D4AFF,#8B5CF6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 8px 25px rgba(109,74,255,.45);
+    z-index:99999;
+    transition:.3s;
 }}
-
 .menu-button:hover{{
-
-transform:scale(1.08);
-
-box-shadow:0 12px 35px rgba(109,74,255,.7);
-
+    transform:scale(1.08);
+    box-shadow:0 12px 35px rgba(109,74,255,.7);
 }}
-
 .sidebar{{
-
-position:fixed;
-
-top:0;
-
-left:-300px;
-
-width:280px;
-
-height:100vh;
-
-background:#0F172A;
-
-border-right:1px solid rgba(255,255,255,.08);
-
-padding:90px 25px 30px;
-
-box-shadow:10px 0 30px rgba(0,0,0,.4);
-
-transition:.35s ease;
-
-z-index:99998;
-
+    position:fixed;
+    top:0;
+    left:-300px;
+    width:280px;
+    height:100vh;
+    background:#0F172A;
+    border-right:1px solid rgba(255,255,255,.08);
+    padding:90px 25px 30px;
+    box-shadow:10px 0 30px rgba(0,0,0,.4);
+    transition:.35s ease;
+    z-index:99998;
 }}
-
 .sidebar.show{{
-
-left:0;
-
+    left:0;
 }}
-
 .sidebar-title{{
-
-font-size:30px;
-
-font-weight:700;
-
-color:white;
-
-margin-bottom:12px;
-
+    font-size:30px;
+    font-weight:700;
+    color:white;
+    margin-bottom:12px;
 }}
-
 .sidebar-subtitle{{
-
-color:#8B93A7;
-
-font-size:13px;
-
-letter-spacing:1px;
-
-margin-bottom:35px;
-
+    color:#8B93A7;
+    font-size:13px;
+    letter-spacing:1px;
+    margin-bottom:35px;
 }}
-
 .sidebar-button{{
-
-display:block;
-
-padding:16px 20px;
-
-margin-bottom:16px;
-
-border-radius:16px;
-
-background:#182235;
-
-color:white;
-
-text-decoration:none;
-
-font-size:18px;
-
-transition:.25s;
-
+    display:block;
+    padding:16px 20px;
+    margin-bottom:16px;
+    border-radius:16px;
+    background:#182235;
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:.25s;
+}}
+.sidebar-button:hover{{
+    background:#6D4AFF;
+    transform:translateX(6px);
 }}
 
-.sidebar-button:hover{{
+section[data-testid="stSidebar"] {{
+    background-color: #0d1220;
+    border-right: 1px solid rgba(255,255,255,0.06);
+}}
 
-background:#6D4AFF;
+section[data-testid="stSidebar"] div.stButton > button {{
+    background: #10192b !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    border-radius: 10px !important;
+    font-weight: 500 !important;
+    padding: 0.6em 1em !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    box-shadow: none !important;
+}}
 
-transform:translateX(6px);
-
+section[data-testid="stSidebar"] div.stButton > button:hover {{
+    background: #16213a !important;
+    border-color: rgba(255,255,255,0.12) !important;
+    color: #f8fafc !important;
 }}
         </style>
         """,
         unsafe_allow_html=True,
     )
+
+with st.sidebar:
+    st.markdown("### 🚀 Startup Analytics")
+    st.caption("NAVIGATION")
+    if st.button("🏠  Home", use_container_width=True):
+        st.switch_page("pages/Home.py")
+    if st.button("📊  Dashboard", use_container_width=True):
+        st.switch_page("pages/Dashboard.py")
+    if st.button("📈  Analytics", use_container_width=True):
+        st.switch_page("pages/Analytics.py")
+    if st.button("🌍  Explorer", use_container_width=True):
+        st.switch_page("pages/Explorer.py")
+    if st.button("🎯  Prediction", use_container_width=True):
+        st.switch_page("pages/Prediction.py")
+    if st.button("ℹ️  About", use_container_width=True):
+        st.switch_page("pages/About.py")
+
+    st.markdown("---")
+    st.caption("Version 1.0")
 
 st.markdown("""
 <style>
@@ -904,26 +618,22 @@ st.markdown("""
     cursor:pointer;
     transition:.25s;
 }
-
 .nav-btn:hover{
     background:#6C4CF6;
     transform:translateX(6px);
     box-shadow:0 0 20px rgba(108,76,246,.45);
 }
-
 .sidebar-title{
     font-size:34px;
     font-weight:800;
     color:white;
 }
-
 .sidebar-small{
     color:#888;
     letter-spacing:2px;
     margin-top:25px;
     margin-bottom:20px;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -953,10 +663,7 @@ industry_counts = (
 )
 
 industry_counts.index = industry_counts.index.str.replace("|", "<br>", regex=False)
-
-
 industry_fig = px.bar(
-
     x=industry_counts.values,
     y=industry_counts.index,
     orientation="h",
@@ -965,33 +672,25 @@ industry_fig = px.bar(
 industry_fig.update_traces(
     marker_color="#5A447F",
     marker_line_width=0
-
 )
 industry_fig.update_layout(
-
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-
     font=dict(
         color=COLOR_TEXT,
         family="Inter"
     ),
-
     margin=dict(
         l=260,
         r=20,
         t=20,
         b=20
     ),
-
     height=380,
-
     xaxis_title="Number of Startups",
     yaxis_title="",
-
     showlegend=False
 )
-
 country_counts = (
     df["country"]
     .value_counts()
@@ -999,92 +698,60 @@ country_counts = (
     .sort_values()
 )
 country_fig = px.bar(
-
     x=country_counts.values,
-
     y=country_counts.index,
-
     orientation="h",
-
     template="plotly_dark"
-
 )
 country_fig.update_traces(
-
     marker_color="#43819C",
-
     marker_line_width=0,
-
     width=0.7
-
 )
 country_fig.update_layout(
-
     paper_bgcolor="rgba(0,0,0,0)",
-
     plot_bgcolor="rgba(0,0,0,0)",
-
     font=dict(
-
         color=COLOR_TEXT,
-
         family="Inter"
-
     ),
-
     margin=dict(
-
         l=20,
         r=20,
         t=20,
         b=20
     ),
-
     height=380,
     xaxis_title="Number of Startups",
     yaxis_title="",
     showlegend=False
-
 )
 country_fig.update_xaxes(
-
     showgrid=True,
-
     gridcolor="rgba(255,255,255,.08)",
-
     zeroline=False
-
 )
-
 country_fig.update_yaxes(
-
     showgrid=False,
-
     zeroline=False
-
 )
 def widget_html(icon, value, title, status, footer):
     return f"""
     <div class="widget-card">
         <div class="widget-top">
-
             <div class="widget-icon">
                 {icon}
             </div>
-
             <div class="widget-status">
                 {status}
             </div>
-
         </div>
-
         <div class="widget-value">
             {value}
         </div>
         <div class="widget-title">
             {title}
         </div>
-
         <div class="widget-footer">
             Explore →
         </div>
@@ -1097,68 +764,51 @@ def chart_header(title, subtitle):
         <div class="chart-icon">
             {title.split()[0]}
         </div>
-
         <div class="chart-text">
             <div class="chart-title">
                 {" ".join(title.split()[1:])}
             </div>
-
             <div class="chart-subtitle">
                 {subtitle}
             </div>
         </div>
     </div>
     """
-
 render_html(f"""
 <div class="hero-section">
     <div class="hero-left">
-
         <div class="hero-badge">
             Startup Analytics
         </div>
-
         <div class="hero-title">
             Analytics<br>
             <span>Dashboard</span>
         </div>
-
         <div class="hero-subtitle">
             Explore startup funding trends, regional growth,
             industry insights and business performance
             through interactive visualizations.
         </div>
-
         <div class="hero-divider"></div>
-
     </div>
-
-   <div class="hero-right">
-
+    <div class="hero-right">
         <div class="floating-card card-one">
             {widget_html("🚀",startup_display,"Startups","● LIVE","Updated Today")}
         </div>
-
         <div class="floating-card card-two">
             {widget_html("🌍",total_countries,"Countries","GLOBAL","Across Dataset")}
         </div>
     </div>
 </div>
-</div>
-   </div>
-</div>
 """)
 
 render_html("""
 <div class="section-header">
-
     <div class="section-line"></div>
-
     <div>
         <div class="section-title">
            📊 Ecosystem Overview
         </div>
-
         <div class="section-subtitle">
            Explore the structure and distribution of the global startup ecosystem.
         </div>
@@ -1167,22 +817,18 @@ render_html("""
 """)
 
 col1, col2 = st.columns(2, gap="large")
-
 with col1:
-
     render_html(
         chart_header(
             "🌍 Top Startup Countries",
             "Top countries by startup count."
         )
     )
-
     st.plotly_chart(
-       country_fig,
+        country_fig,
         use_container_width=True,
         config={"displayModeBar": False}
     )
-
     render_html("</div>")
 
 with col2:
@@ -1192,15 +838,12 @@ with col2:
             "Number of startups across different industries."
         )
     )
-
     st.plotly_chart(
         industry_fig,
         use_container_width=True,
         config={"displayModeBar": False}
     )
-
     render_html("</div>")
-
 
 status_counts = (
     df["status"]
@@ -1213,63 +856,51 @@ status_fig = px.pie(
     template="plotly_dark"
 )
 status_fig.update_traces(
-
     textinfo="none",
     textfont_size=14,
     hovertemplate="<b>%{label}</b><br>%{value} startups<extra></extra>",
-
     marker=dict(
- colors=[
-        "#A5B4FC",
-        "#6C7AC2",   
-        "#4FA795",  
-        "#8E456D"    
-    ],
-     line=dict(
-        color="rgba(255,255,255,0.06)",
-        width=1
+        colors=[
+            "#A5B4FC",
+            "#6C7AC2",
+            "#4FA795",
+            "#8E456D"
+        ],
+        line=dict(
+            color="rgba(255,255,255,0.06)",
+            width=1
+        )
     )
-
-    )
-
 )
 status_fig.update_layout(
-
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-
     font=dict(
         color=COLOR_TEXT,
         family="Inter"
     ),
-
     height=380,
-
     legend=dict(
         orientation="h",
         y=-0.15,
         x=0.15
     ),
-
     margin=dict(
         l=20,
         r=20,
         t=20,
         b=40
     )
-
 )
 
 col3, col4 = st.columns(2, gap="large")
 with col3:
-
     render_html(
         chart_header(
             "👩‍💻 Startup Status",
             "Distribution of startup lifecycle stages."
         )
     )
-
     st.plotly_chart(
         status_fig,
         use_container_width=True,
@@ -1277,14 +908,12 @@ with col3:
     )
 
 with col4:
-
     render_html(
         chart_header(
             "📊 Funding Rounds",
             "Distribution of startups by the number of funding rounds."
         )
     )
-
     round_counts = (
         df["funding_rounds"]
         .dropna()
@@ -1293,7 +922,6 @@ with col4:
         .sort_index()
         .head(8)
     )
-
     round_fig = px.bar(
         x=round_counts.index.astype(str),
         y=round_counts.values,
@@ -1303,17 +931,20 @@ with col4:
             "y": "Number of Startups"
         }
     )
-
     round_fig.update_traces(
         marker_color="#7C89CA",
         hovertemplate="<b>%{x} Funding Rounds</b><br>%{y} Startups<extra></extra>"
     )
-
     round_fig.update_layout(
         height=420,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        margin=dict(l=20, r=20, t=20, b=20),
+        margin=dict(
+            l=20,
+            r=20,
+            t=20,
+            b=20
+        ),
         showlegend=False,
         xaxis=dict(
             title="Funding Rounds",
@@ -1326,14 +957,11 @@ with col4:
             zeroline=False
         )
     )
-
     st.plotly_chart(
         round_fig,
         use_container_width=True,
         config={"displayModeBar": False}
     )
-
-
     st.markdown("<br>", unsafe_allow_html=True)
 
 render_html("""
@@ -1352,10 +980,8 @@ render_html("""
 
     </div>
 
-
 </div>
 """)
-
 
 from datetime import datetime
 
@@ -1446,7 +1072,6 @@ with col5:
         use_container_width=True,
         config={"displayModeBar": False}
     )
-
 
 with col6:
 
@@ -1783,7 +1408,6 @@ yearly_funding = (
     .reset_index()
 )
 
-
 funding_time_fig = px.area(
     yearly_funding,
     x="year",
@@ -1840,7 +1464,6 @@ funding_time_fig.update_layout(
 
     showlegend=False
 )
-
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -2101,7 +1724,6 @@ insight_df["company_age"] = pd.to_numeric(
     errors="coerce"
 )
 
-
 insight_df["first_funding_date"] = pd.to_datetime(
     insight_df["first_funding_date"],
     errors="coerce"
@@ -2128,7 +1750,6 @@ else:
     peak_funding_year = "N/A"
     peak_funding_count = 0
 
-
 industry_status = (
     insight_df
     .dropna(subset=["industry", "status"])
@@ -2146,7 +1767,6 @@ else:
     top_acquired_industry = "N/A"
     top_acquired_count = 0
 
-
 funding_analysis = insight_df[
     insight_df["total_funding"].notna()
     & insight_df["funding_rounds"].notna()
@@ -2159,8 +1779,6 @@ if len(funding_analysis) > 1:
     ].corr().iloc[0, 1]
 else:
     funding_correlation = 0
-
-
 
 if funding_correlation >= 0.5:
     funding_relationship = "a strong positive relationship"
@@ -2177,7 +1795,6 @@ elif funding_correlation <= -0.2:
 else:
     funding_relationship = "little overall relationship"
 
-
 status_age = (
     insight_df
     .dropna(subset=["status", "company_age"])
@@ -2191,7 +1808,6 @@ if not status_age.empty:
 else:
     oldest_status = "N/A"
     oldest_status_age = 0
-
 
 print("Peak funding year:", peak_funding_year)
 print("Peak funding count:", peak_funding_count)
@@ -2233,7 +1849,6 @@ top_industry = (
 )
 
 avg_funding = df["total_funding"].mean()
-
 
 avg_age = df["company_age"].mean()
 
