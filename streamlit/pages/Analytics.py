@@ -24,7 +24,7 @@ def render_sidebar():
                 color:{COLOR_TEXT};
                 letter-spacing:-0.01em;
             ">
-                🚀 Startup Analytics
+                Startup Success Predictor
             </div>
 
             <div style="
@@ -84,7 +84,6 @@ def render_sidebar():
                     use_container_width=True
                 ):
                     st.switch_page(page)
-
 
 st.set_page_config(
     page_title="Analytics",
@@ -534,12 +533,33 @@ section[data-testid="stSidebar"] .stButton button {{
     position:relative;
     overflow:hidden;
 }}
-
+section[data-testid="stSidebar"] .stButton button::before {{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(56,189,248,0.18), rgba(168,85,247,0.18));
+    opacity: 0;
+    transition: opacity 0.28s ease;
+}}
 section[data-testid="stSidebar"] .stButton button:hover {{
     border:1px solid rgba(56,189,248,.45);
     color:#38BDF8;
     transform:translateX(5px);
     box-shadow:0 4px 18px rgba(56,189,248,.18);
+}}
+section[data-testid="stSidebar"] .stButton button:hover::before {{ opacity: 1; }}
+section[data-testid="stSidebar"] .stButton button:active {{ transform: translateX(5px) scale(0.98); }}
+.version-badge {{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: {COLOR_MINT};
+    background: rgba(45,212,191,0.10);
+    border: 1px solid rgba(45,212,191,0.28);
+    padding: 3px 10px;
+    border-radius: 999px;
 }}
 
 .nav-active {{
