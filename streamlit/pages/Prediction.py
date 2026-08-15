@@ -42,10 +42,10 @@ def inject_custom_css():
         html, body, [class*="css"] {{ font-family: 'Inter', 'Segoe UI', sans-serif; }}
         .stApp {{
             background:
-                radial-gradient(circle at 12% 8%, rgba(56,189,248,0.14), transparent 42%),
-                radial-gradient(circle at 88% 5%, rgba(168,85,247,0.16), transparent 48%),
-                radial-gradient(circle at 60% 90%, rgba(45,212,191,0.10), transparent 50%),
-                {COLOR_BG};
+                radial-gradient(circle at 12% 15%, rgba(124,58,237,0.14), transparent 38%),
+                radial-gradient(circle at 88% 8%, rgba(37,99,235,0.14), transparent 38%),
+                radial-gradient(circle at 50% 95%, rgba(34,211,238,0.08), transparent 40%),
+                #0a0e1a;
             background-size: 200% 200%;
             animation: auroraDrift 24s ease-in-out infinite;
             color: {COLOR_TEXT};
@@ -77,6 +77,11 @@ def inject_custom_css():
             border: 1px solid rgba(56,189,248,0.4) !important; border-left: 3px solid {COLOR_PRIMARY} !important;
             border-radius: 10px; padding: 0.6rem 1rem 0.6rem 0.85rem; margin-bottom: 6px;
             font-weight: 700; color: {COLOR_PRIMARY} !important; font-size: 0.92rem; display: flex; align-items: center; gap: 10px;
+        }}
+        .version-badge {{
+            display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 700;
+            color: {COLOR_MINT}; background: rgba(45,212,191,0.10); border: 1px solid rgba(45,212,191,0.28);
+            padding: 3px 10px; border-radius: 999px;
         }}
 
         .hero-eyebrow {{
@@ -197,16 +202,24 @@ def render_sidebar():
         render_html(
             f"""
             <div style="padding:0.6rem 0 1rem 0;">
-                <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.4rem; color:{COLOR_TEXT};">🚀 Startup Success Predictor</div>
-                <div style="font-size:0.72rem; color:{COLOR_MUTED};">Startup Analytics Platform</div>
+                <div style="font-family:'Manrope','Inter',sans-serif; font-weight:700; font-size:1.5rem; color:{COLOR_TEXT}; letter-spacing:-0.01em;">Startup Success Predictor</div>
+                <div style="font-size:0.72rem; color:{COLOR_MUTED}; letter-spacing:0.02em;">Startup Analytics Platform</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:1.4rem;">
+                <span class="version-badge">✓ Machine Learning Model </span>
             </div>
             """
         )
-        nav_items = [("🏠", "Home"), ("📊", "Dashboard"), ("📈", "Analytics"), ("🤖", "Prediction"), ("ℹ️", "About")]
+        render_html(
+            f"<div style='font-size:0.72rem; font-weight:700; letter-spacing:0.1em; "
+            f"text-transform:uppercase; color:{COLOR_MUTED}; margin-bottom:0.6rem;'>Navigation</div>"
+        )
+        nav_items = [("🏠", "Home"), ("📊", "Dashboard"), ("📈", "Analytics"), ("🔍", "Explorer"), ("🤖", "Prediction"), ("ℹ️", "About")]
         page_map = {
             "Home": "Home.py",
             "Dashboard": "Dashboard.py",
             "Analytics": "Analytics.py",
+            "Explorer": "Explorer.py",
             "Prediction": "Prediction.py",
             "About": "About.py",
         }
