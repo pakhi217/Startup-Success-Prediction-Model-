@@ -20,6 +20,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+st.markdown("<style>[data-testid='stSidebarNav'] {display: none;}</style>", unsafe_allow_html=True)
 
 
 COLOR_BG = "#0B1120"
@@ -1557,7 +1558,7 @@ def render_sidebar():
         )
 
         nav_items = [
-            ("🏠","Home"),
+            ("🏠", "Home"),
             ("📊", "Dashboard"),
             ("📈", "Analytics"),
             ("🔍", "Explorer"),
@@ -1565,19 +1566,22 @@ def render_sidebar():
             ("ℹ️", "About"),
         ]
 
-        if "active_nav" not in st.session_state:
-            st.session_state.active_nav = "Dashboard"
+        page_map = {
+            "Home": "Home.py",
+            "Dashboard": "Dashboard.py",
+            "Analytics": "Analytics.py",
+            "Explorer": "Explorer.py",
+            "Prediction": "Prediction.py",
+            "About": "About.py",
+        }
 
+        CURRENT_PAGE = "Dashboard"
         for icon, label in nav_items:
-            is_active = st.session_state.active_nav == label
-            if is_active:
-                render_html(f'<div class="nav-active">{icon} &nbsp;{label}</div>')
+            if label == CURRENT_PAGE:
+                st.markdown(f'<div class="nav-active">{icon} &nbsp;{label}</div>', unsafe_allow_html=True)
             else:
                 if st.button(f"{icon}   {label}", key=f"nav_{label}", use_container_width=True):
-                    st.session_state.active_nav = label
-                    st.rerun()
-
-        
+                    st.switch_page(f"pages/{page_map[label]}")
 
 def main():
     """Main entry point that assembles the full Dashboard page."""

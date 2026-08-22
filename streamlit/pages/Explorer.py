@@ -10,51 +10,41 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
+st.markdown("<style>[data-testid='stSidebarNav'] {display: none;}</style>", unsafe_allow_html=True)
 
 # ============================================================
 # SIDEBAR NAVIGATION
 # ============================================================
 
 with st.sidebar:
-
-    st.markdown(
-    """
-    <div class="sidebar-brand">
-        <div class="sidebar-title">
-            🚀 Startup Success<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;Predictor
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-    if st.button("🏠  Home", use_container_width=True):
-        st.switch_page("pages/Home.py")
-
-    if st.button("📊  Dashboard", use_container_width=True):
-        st.switch_page("pages/Dashboard.py")
-
-    if st.button("📈  Analytics", use_container_width=True):
-        st.switch_page("pages/Analytics.py")
-
-    # CURRENT PAGE — Startup Explorer
     st.markdown(
         """
-        <div class="sidebar-active">
-            🔍&nbsp;&nbsp; Startup Explorer
+        <div style="padding:0.6rem 0 1rem 0;">
+            <div style="font-family:'Manrope','Inter',sans-serif; font-weight:700; font-size:1.5rem; color:#F8FAFC; letter-spacing:-0.01em;">Startup Success Predictor</div>
+            <div style="font-size:0.72rem; color:#94A3B8; letter-spacing:0.02em;">Startup Analytics Platform</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:1.4rem;">
+            <span class="version-badge">✓ Machine Learning Model </span>
         </div>
         """,
         unsafe_allow_html=True
     )
 
+    if st.button("🏠  Home", use_container_width=True):
+        st.switch_page("pages/Home.py")
+    if st.button("📊  Dashboard", use_container_width=True):
+        st.switch_page("pages/Dashboard.py")
+    if st.button("📈  Analytics", use_container_width=True):
+        st.switch_page("pages/Analytics.py")
+
+    st.markdown('<div class="nav-active">🔍&nbsp;&nbsp;Explorer</div>', unsafe_allow_html=True)
+
     if st.button("🤖  Prediction", use_container_width=True):
         st.switch_page("pages/Prediction.py")
-
     if st.button("ℹ️  About", use_container_width=True):
         st.switch_page("pages/About.py")
 
+   
 
 COLOR_BG = "#0B1120"
 COLOR_CARD = "#1E293B"

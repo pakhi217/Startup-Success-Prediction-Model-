@@ -91,6 +91,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+st.markdown("<style>[data-testid='stSidebarNav'] {display: none;}</style>", unsafe_allow_html=True)
 
 COLOR_BG = "#0B1120"
 COLOR_CARD = "#1E293B"

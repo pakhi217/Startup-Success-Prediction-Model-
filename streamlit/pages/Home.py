@@ -9,6 +9,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+st.markdown("<style>[data-testid='stSidebarNav'] {display: none;}</style>", unsafe_allow_html=True)
 
 # GLOBAL THEME
 st.markdown("""
@@ -397,25 +398,29 @@ with st.sidebar:
     )
 
     nav_items = [
-        ("🏠", "Home"),
-        ("📊", "Dashboard"),
-        ("📈", "Analytics"),
-        ("🔍", "Explorer"),
-        ("🤖", "Prediction"),
-        ("ℹ️", "About"),
-    ]
+    ("🏠", "Home"),
+    ("📊", "Dashboard"),
+    ("📈", "Analytics"),
+    ("🔍", "Explorer"),
+    ("🤖", "Prediction"),
+    ("ℹ️", "About"),
+]
 
-    if "active_nav" not in st.session_state:
-        st.session_state.active_nav = "Home"
-
+    page_map = {
+    "Home": "Home.py",
+    "Dashboard": "Dashboard.py",
+    "Analytics": "Analytics.py",
+    "Explorer": "Explorer.py",
+    "Prediction": "Prediction.py",
+    "About": "About.py",
+}
+    CURRENT_PAGE = "Home"   
     for icon, label in nav_items:
-        is_active = st.session_state.active_nav == label
-        if is_active:
+        if label == CURRENT_PAGE:
             st.markdown(f'<div class="nav-active">{icon} &nbsp;{label}</div>', unsafe_allow_html=True)
         else:
             if st.button(f"{icon}   {label}", key=f"nav_{label}", use_container_width=True):
-                st.session_state.active_nav = label
-                st.rerun()
+                st.switch_page(f"pages/{page_map[label]}")
 
 
 # HERO SECTION (heading + tagline left, illustration right)
@@ -438,9 +443,11 @@ with hero_left:
     )
     b1, b2 = st.columns(2)
     with b1:
-        st.button("🚀 Get Started", use_container_width=True, key="hero_get_started")
+        if st.button("🚀 Get Started", use_container_width=True, key="hero_get_started"):
+            st.switch_page("pages/Prediction.py")
     with b2:
-        st.button("📊 Explore Dashboard", use_container_width=True, key="hero_explore_dashboard")
+        if st.button("📊 Explore Dashboard", use_container_width=True, key="hero_explore_dashboard"):
+            st.switch_page("pages/Dashboard.py")
 
 with hero_right:
     components.html("""
@@ -594,9 +601,11 @@ cta_l, cta_c, cta_r = st.columns([1, 1, 1])
 with cta_c:
     c1, c2 = st.columns(2)
     with c1:
-        st.button("🤖 Start Prediction", use_container_width=True, key="cta_start_prediction")
+        if st.button("🤖 Start Prediction", use_container_width=True, key="cta_start_prediction"):
+            st.switch_page("pages/Prediction.py")
     with c2:
-        st.button("📊 Explore Dashboard", use_container_width=True, key="cta_explore_dashboard_2")
+        if st.button("📊 Explore Dashboard", use_container_width=True, key="cta_explore_dashboard_2"):
+            st.switch_page("pages/Dashboard.py")
 
 st.write("")
 st.write("")
