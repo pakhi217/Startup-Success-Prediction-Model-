@@ -12,40 +12,6 @@ st.set_page_config(
 )
 st.markdown("<style>[data-testid='stSidebarNav'] {display: none;}</style>", unsafe_allow_html=True)
 
-# ============================================================
-# SIDEBAR NAVIGATION
-# ============================================================
-
-with st.sidebar:
-    st.markdown(
-        """
-        <div style="padding:0.6rem 0 1rem 0;">
-            <div style="font-family:'Manrope','Inter',sans-serif; font-weight:700; font-size:1.5rem; color:#F8FAFC; letter-spacing:-0.01em;">Startup Success Predictor</div>
-            <div style="font-size:0.72rem; color:#94A3B8; letter-spacing:0.02em;">Startup Analytics Platform</div>
-        </div>
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:1.4rem;">
-            <span class="version-badge">✓ Machine Learning Model </span>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    if st.button("🏠  Home", use_container_width=True):
-        st.switch_page("pages/Home.py")
-    if st.button("📊  Dashboard", use_container_width=True):
-        st.switch_page("pages/Dashboard.py")
-    if st.button("📈  Analytics", use_container_width=True):
-        st.switch_page("pages/Analytics.py")
-
-    st.markdown('<div class="nav-active">🔍&nbsp;&nbsp;Explorer</div>', unsafe_allow_html=True)
-
-    if st.button("🤖  Prediction", use_container_width=True):
-        st.switch_page("pages/Prediction.py")
-    if st.button("ℹ️  About", use_container_width=True):
-        st.switch_page("pages/About.py")
-
-   
-
 COLOR_BG = "#0B1120"
 COLOR_CARD = "#1E293B"
 COLOR_PRIMARY = "#38BDF8"
@@ -64,8 +30,58 @@ CHART_COLORWAY = [
     "#818CF8"
 ]
 
+# ============================================================
+# SIDEBAR NAVIGATION (matches Dashboard.py's render_sidebar)
+# ============================================================
 
-from pathlib import Path
+with st.sidebar:
+    st.markdown(
+        f"""
+        <div style="display:flex; align-items:center; gap:12px; padding:0.6rem 0 1rem 0;">
+            <div>
+                <div style="font-family:'Manrope','Inter',sans-serif; font-weight:700; font-size:1.5rem; color:{COLOR_TEXT}; letter-spacing:-0.01em;">Startup Success Predictor</div>
+                <div style="font-size:0.72rem; color:{COLOR_MUTED}; letter-spacing:0.02em;">Startup Analytics Platform</div>
+            </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:1.4rem;">
+            <span class="version-badge">✓ Machine Learning Model </span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f"<div style='font-size:0.72rem; font-weight:700; letter-spacing:0.1em; "
+        f"text-transform:uppercase; color:{COLOR_MUTED}; margin-bottom:0.6rem;'>Navigation</div>",
+        unsafe_allow_html=True
+    )
+
+    nav_items = [
+        ("🏠", "Home"),
+        ("📊", "Dashboard"),
+        ("📈", "Analytics"),
+        ("🔍", "Explorer"),
+        ("🤖", "Prediction"),
+        ("ℹ️", "About"),
+    ]
+
+    page_map = {
+        "Home": "Home.py",
+        "Dashboard": "Dashboard.py",
+        "Analytics": "Analytics.py",
+        "Explorer": "Explorer.py",
+        "Prediction": "Prediction.py",
+        "About": "About.py",
+    }
+
+    CURRENT_PAGE = "Explorer"
+    for icon, label in nav_items:
+        if label == CURRENT_PAGE:
+            st.markdown(f'<div class="nav-active">{icon} &nbsp;{label}</div>', unsafe_allow_html=True)
+        else:
+            if st.button(f"{icon}   {label}", key=f"nav_{label}", use_container_width=True):
+                st.switch_page(f"pages/{page_map[label]}")
+
 
 @st.cache_data
 def load_startup_data():
@@ -89,140 +105,104 @@ st.markdown(
 
     .stApp {{
         background:
-            radial-gradient(circle at 12% 8%, rgba(56,189,248,0.14), transparent 42%),
-            radial-gradient(circle at 88% 5%, rgba(168,85,247,0.16), transparent 48%),
-            radial-gradient(circle at 60% 90%, rgba(45,212,191,0.10), transparent 50%),
-            radial-gradient(circle at 25% 70%, rgba(56,189,248,0.06), transparent 45%),
-            {COLOR_BG};
-        background-size: 200% 200%;
-        animation: auroraDrift 24s ease-in-out infinite;
+            radial-gradient(circle at 12% 15%, rgba(124,58,237,0.14), transparent 38%),
+            radial-gradient(circle at 88% 8%, rgba(37,99,235,0.14), transparent 38%),
+            radial-gradient(circle at 50% 95%, rgba(34,211,238,0.08), transparent 40%),
+            #0a0e1a;
         color: {COLOR_TEXT};
     }}
 
-    /* ============================================================
-   SIDEBAR NAVIGATION
-   ============================================================ */
+    /* ---------- Sidebar (matches Dashboard.py) ---------- */
+    section[data-testid="stSidebar"] {{
+        background: linear-gradient(180deg, rgba(15,23,42,0.98) 0%, rgba(11,17,32,0.99) 100%);
+        backdrop-filter: blur(18px);
+        border-right: 1px solid rgba(148,163,184,0.10);
+    }}
+    section[data-testid="stSidebar"] .stButton button {{
+        width: 100%;
+        text-align: left;
+        background: rgba(255,255,255,0.02);
+        color: {COLOR_TEXT};
+        border: 1px solid rgba(148,163,184,0.08);
+        border-radius: 12px;
+        padding: 0.6rem 1rem;
+        margin-bottom: 6px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }}
+    section[data-testid="stSidebar"] .stButton button::before {{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(56,189,248,0.18), rgba(168,85,247,0.18));
+        opacity: 0;
+        transition: opacity 0.28s ease;
+    }}
+    section[data-testid="stSidebar"] .stButton button:hover {{
+        border: 1px solid rgba(56,189,248,0.45);
+        color: {COLOR_PRIMARY};
+        transform: translateX(5px);
+        box-shadow: 0 4px 18px rgba(56,189,248,0.18);
+    }}
+    section[data-testid="stSidebar"] .stButton button:hover::before {{ opacity: 1; }}
+    section[data-testid="stSidebar"] .stButton button:active {{ transform: translateX(5px) scale(0.98); }}
 
-section[data-testid="stSidebar"] {{
-    background: #0B1120 !important;
-    border-right: 1px solid rgba(56,189,248,0.10);
-}}
+    .nav-active {{
+        background: linear-gradient(90deg, rgba(56,189,248,0.16), rgba(168,85,247,0.10)) !important;
+        border: 1px solid rgba(56,189,248,0.4) !important;
+        border-left: 3px solid {COLOR_PRIMARY} !important;
+        border-radius: 10px;
+        padding: 0.6rem 1rem 0.6rem 0.85rem;
+        margin-bottom: 6px;
+        font-weight: 700;
+        color: {COLOR_PRIMARY} !important;
+        font-size: 0.92rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }}
+    .nav-item {{
+        border-radius: 10px;
+        padding: 0.6rem 1rem;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: {COLOR_MUTED};
+        font-size: 0.92rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.25s ease;
+    }}
+    .nav-item:hover {{
+        background: rgba(148,163,184,0.06);
+        color: {COLOR_TEXT};
+    }}
 
-section[data-testid="stSidebar"] > div {{
-    background: #0B1120 !important;
-}}
+    .version-badge {{
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: {COLOR_MINT};
+        background: rgba(45,212,191,0.10);
+        border: 1px solid rgba(45,212,191,0.28);
+        padding: 3px 10px;
+        border-radius: 999px;
+    }}
+    .online-dot {{
+        width: 7px; height: 7px; border-radius: 50%;
+        background: {COLOR_MINT};
+        display: inline-block;
+        animation: softPulseGlow 2.2s ease-in-out infinite;
+    }}
 
-section[data-testid="stSidebar"] .block-container {{
-    padding-top: 1.5rem !important;
-    padding-left: 1.4rem !important;
-    padding-right: 1.4rem !important;
-}}
-
-
-/* ---------- BRAND ---------- */
-
-.sidebar-brand {{
-    margin-bottom: 2.8rem;
-}}
-
-.sidebar-title {{
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-size: 1.65rem;
-    line-height: 1.35;
-    font-weight: 700;
-    color: #F8FAFC;
-    letter-spacing: -0.02em;
-}}
-
-.sidebar-subtitle {{
-    margin-top: 0.45rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.82rem;
-    color: #94A3B8;
-}}
-
-
-/* ---------- NORMAL BUTTONS ---------- */
-
-section[data-testid="stSidebar"] .stButton {{
-    margin-bottom: 1.05rem;
-}}
-
-section[data-testid="stSidebar"] .stButton > button {{
-    width: 100%;
-    height: 55px;
-
-    background: #111827 !important;
-
-    color: #F8FAFC !important;
-
-    border: 1px solid rgba(148,163,184,0.10) !important;
-
-    border-radius: 15px !important;
-
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-
-    box-shadow: none !important;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}}
-
-section[data-testid="stSidebar"] .stButton > button:hover {{
-    background: #172033 !important;
-
-    border-color: rgba(56,189,248,0.35) !important;
-
-    color: #F8FAFC !important;
-
-    transform: translateY(-1px);
-}}
-
-
-/* ---------- ACTIVE PAGE ---------- */
-
-.sidebar-active {{
-    width: 100%;
-    height: 55px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    box-sizing: border-box;
-
-    margin-bottom: 1.05rem;
-
-    border-radius: 15px;
-
-    background:
-        linear-gradient(
-            100deg,
-            rgba(56,189,248,0.16),
-            rgba(168,85,247,0.16)
-        );
-
-    border: 1px solid #38BDF8;
-
-    color: #38BDF8;
-
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-
-    box-shadow:
-        inset 0 0 20px rgba(56,189,248,0.03),
-        0 0 12px rgba(56,189,248,0.08);
-}}
-
-    @keyframes auroraDrift {{
-        0% {{ background-position: 0% 0%; }}
-        50% {{ background-position: 100% 60%; }}
-        100% {{ background-position: 0% 0%; }}
+    @keyframes softPulseGlow {{
+        0%, 100% {{ box-shadow: 0 0 8px rgba(45,212,191,0.6); }}
+        50%      {{ box-shadow: 0 0 16px rgba(45,212,191,0.95); }}
     }}
 
     @keyframes fadeSlideUp {{
@@ -407,21 +387,6 @@ section[data-testid="stSidebar"] .stButton > button:hover {{
         margin-bottom: 1rem;
     }}
 
-    .filter-card {{
-        background:
-            linear-gradient(
-                145deg,
-                rgba(30,41,59,0.78),
-                rgba(15,23,42,0.78)
-            );
-        border: 1px solid rgba(148,163,184,0.14);
-        border-radius: 18px;
-        padding: 1.2rem 1.3rem 0.6rem 1.3rem;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-        backdrop-filter: blur(16px);
-        margin-bottom: 1.3rem;
-    }}
-
     .filter-label {{
         color: {COLOR_MUTED};
         font-size: 0.72rem;
@@ -529,37 +494,6 @@ section[data-testid="stSidebar"] .stButton > button:hover {{
         font-size: 1.3rem;
     }}
 
-    .chart-card-wrap {{
-        padding: 1px;
-        border-radius: 20px;
-        background:
-            linear-gradient(
-                135deg,
-                rgba(56,189,248,0.35),
-                rgba(168,85,247,0.22),
-                rgba(45,212,191,0.22)
-            );
-        margin-bottom: 1rem;
-        transition: transform 0.3s ease;
-    }}
-
-    .chart-card-wrap:hover {{
-        transform: translateY(-3px);
-    }}
-
-    .chart-card {{
-        background:
-            linear-gradient(
-                160deg,
-                rgba(30,41,59,0.88),
-                rgba(15,23,42,0.88)
-            );
-        backdrop-filter: blur(18px);
-        border-radius: 19px;
-        padding: 1.1rem 1.2rem 0.5rem 1.2rem;
-        box-shadow: 0 10px 32px rgba(0,0,0,0.32);
-    }}
-
     .chart-title {{
         font-family: 'Space Grotesk', sans-serif;
         font-size: 1.02rem;
@@ -590,19 +524,6 @@ section[data-testid="stSidebar"] .stButton > button:hover {{
 
     .result-card strong {{
         color: {COLOR_TEXT};
-    }}
-
-    .table-wrap {{
-        background:
-            linear-gradient(
-                145deg,
-                rgba(30,41,59,0.88),
-                rgba(15,23,42,0.88)
-            );
-        border: 1px solid rgba(56,189,248,0.22);
-        border-radius: 17px;
-        padding: 0.5rem;
-        box-shadow: 0 10px 32px rgba(0,0,0,0.3);
     }}
 
     div[data-testid="stDataFrame"] {{
@@ -723,8 +644,6 @@ st.markdown(
 )
 
 
-st.markdown('<div class="filter-card">', unsafe_allow_html=True)
-
 search_col, industry_col, country_col, status_col = st.columns([1.5, 1, 1, 1])
 
 with search_col:
@@ -786,8 +705,6 @@ with status_col:
         status_options,
         label_visibility="collapsed"
     )
-
-st.markdown('</div>', unsafe_allow_html=True)
 
 
 filtered_df = df.copy()
@@ -975,11 +892,6 @@ with chart_col1:
         )
     )
 
-    st.markdown(
-        '<div class="chart-card-wrap"><div class="chart-card">',
-        unsafe_allow_html=True
-    )
-
     st.caption(
         "How many funding rounds the selected startups have completed."
     )
@@ -988,11 +900,6 @@ with chart_col1:
         fig_rounds,
         use_container_width=True,
         config={"displayModeBar": False}
-    )
-
-    st.markdown(
-        '</div></div>',
-        unsafe_allow_html=True
     )
 
 
@@ -1007,11 +914,6 @@ with chart_col2:
 
     founding_data = founding_data.dropna(
         subset=["founded_date"]
-    )
-
-    st.markdown(
-        '<div class="chart-card-wrap"><div class="chart-card">',
-        unsafe_allow_html=True
     )
 
     if len(founding_data) > 0:
@@ -1089,11 +991,6 @@ with chart_col2:
             "No valid founding-date information is available for the current selection."
         )
 
-    st.markdown(
-        '</div></div>',
-        unsafe_allow_html=True
-    )
-
 
 st.markdown(
     """
@@ -1120,21 +1017,11 @@ display_columns = [
 ]
 
 
-st.markdown(
-    '<div class="table-wrap">',
-    unsafe_allow_html=True
-)
-
 st.dataframe(
     filtered_df[display_columns],
     use_container_width=True,
     hide_index=True,
     height=480
-)
-
-st.markdown(
-    '</div>',
-    unsafe_allow_html=True
 )
 
 
