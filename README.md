@@ -182,30 +182,7 @@ Allows users to enter startup characteristics and receive:
 
 Provides information about the project, dataset, technologies, and methodology.
 
----
 
-📁 Project Structure
-
-Startup-Success-Predictor/
-│
-├── data/
-│   ├── raw/
-│   └── cleaned/
-│
-├── notebooks/
-│
-├── models/
-│
-├── scripts/
-│
-├── streamlit/
-│   ├── app.py
-│   └── pages/
-│
-│
-└── README.md
-
----
 
 ⚙️ Installation
 
